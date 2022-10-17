@@ -55,7 +55,7 @@ const HeroSlider = () => {
           className="w-full h-full"
         />
       </div>
-      <div className="absolute bg-[rgba(64,64,64,0.81)] left-0 top-3/4 w-full h-[25%] pt-3">
+      <div className="absolute bg-[rgba(64,64,64,0.5)] left-0 top-3/4 w-full h-[25%] pt-3">
         <p className="font-bold text-white px-4 text-2xl cursor-pointer overflow-hidden whitespace-nowrap text-ellipsis">
           {trendingMovies[currentImage].name}
         </p>
@@ -68,7 +68,7 @@ const HeroSlider = () => {
           <GrFormPrevious size={30} />
         </button>
         <button
-          className="bg-black text-white p-1 rounded-full bg-opacity-20 cursor-pointer hover:bg-opacity-50 transition"
+          className="bg-slate-800 text-white p-1 rounded-full bg-opacity-20 cursor-pointer hover:bg-opacity-50 transition"
           onClick={() => handleOnNextClick()}
         >
           <GrFormNext size={30} />

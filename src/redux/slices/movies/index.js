@@ -3,7 +3,8 @@ import axios from "axios"
 
 const initialState = {
   trendingMovies: [],
-  discoverMovies: []
+  discoverMovies: [],
+  detailMovie: []
 };
 
 export const movieSlice = createSlice({
@@ -15,11 +16,19 @@ export const movieSlice = createSlice({
     },
     setDiscoverMovies: (state, action) => {
       state.discoverMovies = action.payload
-    }
+    },
+    setDetailMovie: (state, action) => {
+      state.detailMovie = action.payload
+    },
+    cleanDetail: (state) => {
+      state.detailMovie = []
+    },
   }
 });
 
-export const { setTrendingMovies, setDiscoverMovies } = movieSlice.actions
+const apikey = "e2e3d6e5bcd2854b499d3e5b96ebbb1c"
+
+export const { setTrendingMovies, setDiscoverMovies, setDetailMovie, cleanDetail } = movieSlice.actions
 
 export default movieSlice.reducer;
 
@@ -45,13 +54,30 @@ export function getMoviesHome(currentPage) {
     try {
       let moviesHome
       if (currentPage === undefined) {
-        moviesHome = await axios.get("https://api.themoviedb.org/3/movie/popular?api_key=e2e3d6e5bcd2854b499d3e5b96ebbb1c&language=en-US&page=1")
+        moviesHome = await axios.get(`https://api.themoviedb.org/3/movie/popular?api_key=${apikey}&language=en-US&page=1`)
       } else {
-        moviesHome = await axios.get(`https://api.themoviedb.org/3/movie/popular?api_key=e2e3d6e5bcd2854b499d3e5b96ebbb1c&language=en-US&page=${currentPage}`)
+        moviesHome = await axios.get(`https://api.themoviedb.org/3/movie/popular?api_key=${apikey}&language=en-US&page=${currentPage}`)
       }
       dispatch(setDiscoverMovies(moviesHome.data.results))
     } catch (error) {
       console.log(error)
     }
+  }
+}
+
+export function getMovieById(idTitle) {
+  return async function (dispatch) {
+    try {
+      const titleData = await axios.get(`https://api.themoviedb.org/3/movie/${idTitle}?api_key=${apikey}&language=en-US`)
+      dispatch(setDetailMovie(titleData.data))
+    } catch (error) {
+      console.log(error)
+    }
+  }
+}
+
+export function cleanDetailMovie() {
+  return function (dispatch) {
+    dispatch(cleanDetail())
   }
 }
