@@ -26,7 +26,7 @@ const Home = () => {
   }, [currentPage]);
 
   return (
-    <main className="flex flex-col min-h-screen bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-300 transition-colors duration-500">
+    <main className="flex flex-col min-h-screen bg-slate-100 dark:bg-zinc-900 text-zinc-800 dark:text-slate-300 transition-colors duration-500">
       <Navbar />
       {trendingMovies.length === 0 && allMovies.length === 0 ? (
         <p>cargando</p>
