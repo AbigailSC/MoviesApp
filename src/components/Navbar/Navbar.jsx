@@ -18,7 +18,7 @@ const Navbar = () => {
       <div className="justify-start w-full mx-auto lg:max-w-7xl md:items-center md:flex md:mx-0 xl:max-w-full">
         <div className="flex pt-2 px-5 justify-between w-full md:hidden">
           <h1 className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-emerald-400 font-bold text-xl">
-            MoviesApp
+            <Link to="/">MoviesApp</Link>
           </h1>
           <div className="flex gap-4">
             <DarkThemeToggle />

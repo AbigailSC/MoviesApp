@@ -22,7 +22,9 @@ const Details = () => {
 
   const imgPosterTitle = `https://image.tmdb.org/t/p/w500/${movieData.poster_path}`;
 
-  console.log(movieData);
+  const titleVideo = movieData.results?.find((video) =>
+    video.name.toLowerCase().includes('official')
+  );
 
   return (
     <main className="flex flex-col items-center bg-slate-100 min-h-screen dark:bg-slate-800 text-slate-300 transition-colors duration-500">
@@ -30,16 +32,19 @@ const Details = () => {
       {movieData.length === 0 ? (
         <p>Loading</p>
       ) : (
-        <div className="relative w-full h-full bg-zinc-900 min-h-screen transition-colors duration-500">
-          <div className="absolute inset-0 h-screen bg-zinc-900 z-0 filter brightness-[.3]">
-            <img
-              src={imgPosterTitle}
-              alt={movieData.title}
-              className="mt-12 h-screen w-full object-cover"
-            />
-          </div>
-          <div className="absolute z-40 px-5 py-8 top-12 flex flex-col gap-5">
-            <div className="flex gap-4 items-center">
+        <div className="relative w-full min-h-screen bg-zinc-900 transition-colors duration-500">
+          {/* <div
+            className="absolute mt-12  inset-0 bg-no-repeat bg-zinc-900 min-h-screen z-0 filter brightness-[.3] blur-sm "
+            style={{ backgroundImage: `url(${imgPosterTitle})` }}
+          >
+          </div> */}
+          <div
+            className="absolute bg-center min-h-screen bg-cover bg-no-repeat z-40 px-5 py-8 flex flex-col gap-5"
+            style={{
+              backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.9)),url(${imgPosterTitle})`
+            }}
+          >
+            <div className="flex gap-4 mt-12 items-center">
               <img
                 src={imgPosterTitle}
                 alt={movieData.title}
@@ -111,11 +116,17 @@ const Details = () => {
             <button className="text-lg text-slate-400 hover:text-white transition bg-zinc-900 duration-300 ease-in-out cursor-pointer py-1 rounded-md">
               <a
                 target="_black"
-                href={`www.imdb.com/title/${movieData.imdb_id}/?ref_=nv_sr_srsg_0`}
+                href={`https://www.imdb.com/title/${movieData.imdb_id}/?ref_=nv_sr_srsg_0`}
               >
                 More information
               </a>
             </button>
+            <iframe
+              className="aspect-video"
+              title="Youtube video player"
+              allowFullScreen
+              src={`https://www.youtube.com/embed/${titleVideo.key}`}
+            ></iframe>
           </div>
         </div>
       )}

@@ -26,7 +26,7 @@ export const movieSlice = createSlice({
   }
 });
 
-const apikey = "e2e3d6e5bcd2854b499d3e5b96ebbb1c"
+const apikey = import.meta.env.VITE_APP_API_KEY;
 
 export const { setTrendingMovies, setDiscoverMovies, setDetailMovie, cleanDetail } = movieSlice.actions
 
@@ -69,7 +69,15 @@ export function getMovieById(idTitle) {
   return async function (dispatch) {
     try {
       const titleData = await axios.get(`https://api.themoviedb.org/3/movie/${idTitle}?api_key=${apikey}&language=en-US`)
-      dispatch(setDetailMovie(titleData.data))
+      const titleVideo = await axios.get(`https://api.themoviedb.org/3/movie/${idTitle}/videos?api_key=${apikey}&language=en-US`)
+      // console.log(titleData.data);
+      // console.log(titleVideo.data);
+      const titleAllInfo = {
+        ...titleData.data,
+        ...titleVideo.data
+      }
+      // console.log(titleAllInfo);
+      dispatch(setDetailMovie(titleAllInfo))
     } catch (error) {
       console.log(error)
     }
