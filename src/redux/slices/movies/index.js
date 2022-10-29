@@ -7,6 +7,8 @@ const initialState = {
   detailMovie: []
 };
 
+const apikey = import.meta.env.VITE_APP_API_KEY;
+
 export const movieSlice = createSlice({
   name: 'movies',
   initialState,
@@ -23,12 +25,16 @@ export const movieSlice = createSlice({
     cleanDetail: (state) => {
       state.detailMovie = []
     },
+    getTitle: (state, action) => {
+      state.discoverMovies = action.payload
+    },
+    cleanSearch: (state) => {
+      state.detailMovie = []
+    },
   }
 });
 
-const apikey = import.meta.env.VITE_APP_API_KEY;
-
-export const { setTrendingMovies, setDiscoverMovies, setDetailMovie, cleanDetail } = movieSlice.actions
+export const { setTrendingMovies, setDiscoverMovies, setDetailMovie, cleanDetail, getTitle, cleanSearch } = movieSlice.actions
 
 export default movieSlice.reducer;
 
@@ -70,13 +76,14 @@ export function getMovieById(idTitle) {
     try {
       const titleData = await axios.get(`https://api.themoviedb.org/3/movie/${idTitle}?api_key=${apikey}&language=en-US`)
       const titleVideo = await axios.get(`https://api.themoviedb.org/3/movie/${idTitle}/videos?api_key=${apikey}&language=en-US`)
-      // console.log(titleData.data);
-      // console.log(titleVideo.data);
+      const titleKeywords = await axios.get(`https://api.themoviedb.org/3/movie/${idTitle}/keywords?api_key=${apikey}`)
+      // **Obtener la localización de usuario y en base a eso recomendar el proveedor en donde puede ver la peli
       const titleAllInfo = {
         ...titleData.data,
-        ...titleVideo.data
+        ...titleVideo.data,
+        keywords: titleKeywords.data.keywords.map((key) => key.name)
       }
-      // console.log(titleAllInfo);
+      console.log(titleAllInfo);
       dispatch(setDetailMovie(titleAllInfo))
     } catch (error) {
       console.log(error)
@@ -87,5 +94,23 @@ export function getMovieById(idTitle) {
 export function cleanDetailMovie() {
   return function (dispatch) {
     dispatch(cleanDetail())
+  }
+}
+
+export function searchTitle(title) {
+  return async function (dispatch) {
+    try {
+      const titles = await axios.get(`https://api.themoviedb.org/3/search/multi?api_key=${apikey}&query=${title}`)
+      // console.log("desde redux", titles.data);
+      dispatch(getTitle(titles.data.results))
+    } catch (error) {
+      console.log(error)
+    }
+  }
+}
+
+export function cleanSearchTitle() {
+  return function (dispatch) {
+    dispatch(cleanSearch())
   }
 }

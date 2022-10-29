@@ -39,7 +39,7 @@ const Details = () => {
           >
           </div> */}
           <div
-            className="absolute bg-center min-h-screen bg-cover bg-no-repeat z-40 px-5 py-8 flex flex-col gap-5"
+            className="absolute bg-center min-h-screen bg-fixed bg-cover bg-no-repeat z-40 px-5 py-8 flex flex-col gap-5"
             style={{
               backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.9)),url(${imgPosterTitle})`
             }}
@@ -60,11 +60,11 @@ const Details = () => {
                   <span className="w-1 h-1 mx-1.5 bg-gray-500 rounded-full"></span>
                   {movieData.runtime > 120 ? (
                     <p className="text-xl text-slate-400">
-                      2h {movieData.runtime - 120}m
+                      2h {movieData.runtime - 120}min
                     </p>
                   ) : (
                     <p className="text-xl text-slate-400">
-                      1h {movieData.runtime - 60}m
+                      1h {movieData.runtime - 60}min
                     </p>
                   )}
                 </div>
@@ -113,6 +113,18 @@ const Details = () => {
                   .join(', ')}
               </p>
             </div>
+            <div className="text-lg">
+              <p className="text-slate-400">
+                <span className="text-slate-300">Keywords: </span>
+                {movieData.keywords.map((words) => words).join(', ')}
+              </p>
+            </div>
+            <iframe
+              className="aspect-video"
+              title="Youtube video player"
+              allowFullScreen
+              src={`https://www.youtube.com/embed/${titleVideo.key}`}
+            ></iframe>
             <button className="text-lg text-slate-400 hover:text-white transition bg-zinc-900 duration-300 ease-in-out cursor-pointer py-1 rounded-md">
               <a
                 target="_black"
@@ -121,12 +133,6 @@ const Details = () => {
                 More information
               </a>
             </button>
-            <iframe
-              className="aspect-video"
-              title="Youtube video player"
-              allowFullScreen
-              src={`https://www.youtube.com/embed/${titleVideo.key}`}
-            ></iframe>
           </div>
         </div>
       )}
