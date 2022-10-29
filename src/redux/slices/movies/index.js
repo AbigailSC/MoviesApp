@@ -4,7 +4,8 @@ import axios from "axios"
 const initialState = {
   trendingMovies: [],
   discoverMovies: [],
-  detailMovie: []
+  detailMovie: [],
+  filteredMovies: []
 };
 
 const apikey = import.meta.env.VITE_APP_API_KEY;
@@ -26,10 +27,10 @@ export const movieSlice = createSlice({
       state.detailMovie = []
     },
     getTitle: (state, action) => {
-      state.discoverMovies = action.payload
+      state.filteredMovies = action.payload
     },
     cleanSearch: (state) => {
-      state.detailMovie = []
+      state.filteredMovies = []
     },
   }
 });
@@ -83,7 +84,7 @@ export function getMovieById(idTitle) {
         ...titleVideo.data,
         keywords: titleKeywords.data.keywords.map((key) => key.name)
       }
-      console.log(titleAllInfo);
+      // console.log(titleAllInfo);
       dispatch(setDetailMovie(titleAllInfo))
     } catch (error) {
       console.log(error)
@@ -101,7 +102,7 @@ export function searchTitle(title) {
   return async function (dispatch) {
     try {
       const titles = await axios.get(`https://api.themoviedb.org/3/search/multi?api_key=${apikey}&query=${title}`)
-      // console.log("desde redux", titles.data);
+      console.log("desde redux", titles.data);
       dispatch(getTitle(titles.data.results))
     } catch (error) {
       console.log(error)

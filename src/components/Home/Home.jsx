@@ -10,6 +10,7 @@ const Home = () => {
   const dispatch = useDispatch();
   const trendingMovies = useSelector((state) => state.movies.trendingMovies);
   const allMovies = useSelector((state) => state.movies.discoverMovies);
+  const allMoviesFilt = useSelector((state) => state.movies.filteredMovies);
   const [currentPage, setCurrentPage] = useState(1);
 
   const paginado = (pageNumber) => {
@@ -24,7 +25,7 @@ const Home = () => {
     dispatch(getMoviesHome(currentPage));
   }, [currentPage]);
 
-  console.log('home ', allMovies);
+  console.log('home ', allMoviesFilt);
 
   return (
     <main className="flex flex-col min-h-screen bg-slate-100 dark:bg-zinc-900 text-zinc-800 dark:text-slate-300 transition-colors duration-500">

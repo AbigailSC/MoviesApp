@@ -22,7 +22,7 @@ export const Searchbar = () => {
         <input
           type="text"
           onChange={(e) => handleInputChange(e)}
-          placeholder="Search a movie/serie/TV show..."
+          placeholder="Search a movie or serie..."
           className="dark:bg-zinc-800 transition-colors duration-500 bg-slate-200 py-2 px-4 w-9/12 rounded-xl focus:outline-none text-white"
         />
         <button
