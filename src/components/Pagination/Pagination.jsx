@@ -1,20 +1,23 @@
 import { BiSkipPrevious, BiSkipNext } from 'react-icons/bi';
 
-const Pagination = ({ pageFunction, current }) => {
+const Pagination = ({ pageFunction, current, maxValue }) => {
   const handleNextPage = (e) => {
     e.preventDefault();
+    console.log(current);
     pageFunction(current + 1);
   };
 
   const handlePrevPage = (e) => {
     e.preventDefault();
     pageFunction(current - 1);
+    console.log(current);
   };
 
   return (
     <div className="flex items-center justify-center mt-8">
       <button
         onClick={(e) => handlePrevPage(e)}
+        disabled={current <= 1}
         className="flex font-bold p-3 bg-slate-300 rounded-l-xl dark:bg-zinc-700 text-slate-800 dark:text-slate-300 transition-colors duration-500 dark:hover:bg-zinc-800 hover:bg-slate-400"
       >
         <BiSkipPrevious className="h-6 w-6 text-zinc-900 dark:text-slate-300 transition-colors duration-500" />
@@ -25,6 +28,7 @@ const Pagination = ({ pageFunction, current }) => {
       </h3>
       <button
         onClick={(e) => handleNextPage(e)}
+        disabled={current >= maxValue}
         className="flex font-bold p-3 bg-slate-300 rounded-r-xl dark:bg-zinc-700 text-slate-800 dark:text-slate-300 transition-colors duration-500 dark:hover:bg-zinc-800 hover:bg-slate-400"
       >
         Next

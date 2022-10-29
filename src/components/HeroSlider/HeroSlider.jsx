@@ -47,34 +47,43 @@ const HeroSlider = () => {
     slideRef.current.classList.add('fade-anim');
   };
   return (
-    <div ref={slideRef} className="w-full select-none relative bg-slate-500 ">
-      <div className="aspect-w-16 aspect-h-9duration-700 ease-linear">
-        <img
-          src={trendingMovies[currentImage].img}
-          alt="Trending Movies"
-          className="w-full h-full"
-        />
-      </div>
-      <div className="absolute bg-[rgba(64,64,64,0.5)] left-0 top-3/4 w-full h-[25%] pt-3">
-        <p className="font-bold text-white px-4 text-2xl cursor-pointer overflow-hidden whitespace-nowrap text-ellipsis">
-          {trendingMovies[currentImage].name}
-        </p>
-      </div>
-      <div className="absolute w-full top-1/2 transform -translate-y-1/2 px-3 flex justify-between items-center">
-        <button
-          className="bg-slate-300 p-1 rounded-full bg-opacity-20 cursor-pointer hover:bg-opacity-50 transition"
-          onClick={() => handleOnPrevClick()}
+    <>
+      {trendingMovies.length === 0 ? (
+        <p>cargando</p>
+      ) : (
+        <div
+          ref={slideRef}
+          className="w-full select-none relative bg-slate-500 "
         >
-          <GrFormPrevious size={30} />
-        </button>
-        <button
-          className="bg-slate-800 text-white p-1 rounded-full bg-opacity-20 cursor-pointer hover:bg-opacity-50 transition"
-          onClick={() => handleOnNextClick()}
-        >
-          <GrFormNext size={30} />
-        </button>
-      </div>
-    </div>
+          <div className="aspect-w-16 aspect-h-9duration-700 ease-linear">
+            <img
+              src={trendingMovies[currentImage].img}
+              alt="Trending Movies"
+              className="w-full h-full"
+            />
+          </div>
+          <div className="absolute bg-[rgba(64,64,64,0.5)] left-0 top-3/4 w-full h-[25%] pt-3">
+            <p className="font-bold text-white px-4 text-2xl cursor-pointer overflow-hidden whitespace-nowrap text-ellipsis">
+              {trendingMovies[currentImage].name}
+            </p>
+          </div>
+          <div className="absolute w-full top-1/2 transform -translate-y-1/2 px-3 flex justify-between items-center">
+            <button
+              className="bg-slate-300 p-1 rounded-full bg-opacity-20 cursor-pointer hover:bg-opacity-50 transition"
+              onClick={() => handleOnPrevClick()}
+            >
+              <GrFormPrevious size={30} />
+            </button>
+            <button
+              className="bg-slate-800 text-white p-1 rounded-full bg-opacity-20 cursor-pointer hover:bg-opacity-50 transition"
+              onClick={() => handleOnNextClick()}
+            >
+              <GrFormNext size={30} />
+            </button>
+          </div>
+        </div>
+      )}
+    </>
   );
 };
 

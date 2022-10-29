@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { AiOutlineSearch } from 'react-icons/ai';
 import { useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { searchTitle } from '../../redux/slices/movies/index';
 
 export const Searchbar = () => {
@@ -29,7 +30,9 @@ export const Searchbar = () => {
           onClick={(e) => handleSubmit(e)}
           className="absolute text-slate-400 bottom-[20%] left-[80%] transition duration-300 ease-in-out hover:transition-all dark:hover:text-white hover:text-slate-600"
         >
-          <AiOutlineSearch className="h-6 w-6" />
+          <Link to="/search">
+            <AiOutlineSearch className="h-6 w-6" />
+          </Link>
         </button>
       </div>
     </div>

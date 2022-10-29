@@ -5,7 +5,9 @@ const initialState = {
   trendingMovies: [],
   discoverMovies: [],
   detailMovie: [],
-  filteredMovies: []
+  filteredMovies: [],
+  titlename: "",
+  maxPages: null,
 };
 
 const apikey = import.meta.env.VITE_APP_API_KEY;
@@ -32,17 +34,23 @@ export const movieSlice = createSlice({
     cleanSearch: (state) => {
       state.filteredMovies = []
     },
+    persistTitle: (state, action) => {
+      state.titlename = action.payload
+    },
+    getMaxPages: (state, action) => {
+      state.maxPages = action.payload
+    }
   }
 });
 
-export const { setTrendingMovies, setDiscoverMovies, setDetailMovie, cleanDetail, getTitle, cleanSearch } = movieSlice.actions
+export const { setTrendingMovies, setDiscoverMovies, setDetailMovie, cleanDetail, getTitle, cleanSearch, persistTitle, getMaxPages } = movieSlice.actions
 
 export default movieSlice.reducer;
 
 export function getTrendingMovies() {
   return async function (dispatch) {
     try {
-      const trendingMoviesInfo = await axios.get('https://api.themoviedb.org/3/trending/all/week?api_key=e2e3d6e5bcd2854b499d3e5b96ebbb1c')
+      const trendingMoviesInfo = await axios.get('https://api.themoviedb.org/3/trending/movie/week?api_key=e2e3d6e5bcd2854b499d3e5b96ebbb1c')
       const dataMovies = trendingMoviesInfo.data.results.map((movie) => {
         return {
           img: 'https://image.tmdb.org/t/p/w500/' + movie.backdrop_path,
@@ -66,6 +74,7 @@ export function getMoviesHome(currentPage) {
         moviesHome = await axios.get(`https://api.themoviedb.org/3/movie/popular?api_key=${apikey}&language=en-US&page=${currentPage}`)
       }
       dispatch(setDiscoverMovies(moviesHome.data.results))
+      dispatch(getMaxPages(moviesHome.data.total_pages))
     } catch (error) {
       console.log(error)
     }
@@ -84,7 +93,7 @@ export function getMovieById(idTitle) {
         ...titleVideo.data,
         keywords: titleKeywords.data.keywords.map((key) => key.name)
       }
-      // console.log(titleAllInfo);
+      console.log(titleAllInfo);
       dispatch(setDetailMovie(titleAllInfo))
     } catch (error) {
       console.log(error)
@@ -98,12 +107,19 @@ export function cleanDetailMovie() {
   }
 }
 
-export function searchTitle(title) {
+export function searchTitle(title, currentPage) {
   return async function (dispatch) {
     try {
-      const titles = await axios.get(`https://api.themoviedb.org/3/search/multi?api_key=${apikey}&query=${title}`)
+      let titles
+      if (currentPage === undefined) {
+        titles = await axios.get(`https://api.themoviedb.org/3/search/movie?api_key=${apikey}&query=${title}&page=1`)
+      } else {
+        titles = await axios.get(`https://api.themoviedb.org/3/search/movie?api_key=${apikey}&query=${title}&page=${currentPage}`)
+      }
       console.log("desde redux", titles.data);
       dispatch(getTitle(titles.data.results))
+      dispatch(persistTitle(title))
+      dispatch(getMaxPages(titles.data.total_pages))
     } catch (error) {
       console.log(error)
     }
