@@ -4,25 +4,28 @@ import Pagination from '@components/Pagination';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { searchTitle } from '../../redux/slices/movies';
+import { useParams } from 'react-router-dom';
 
 const SearchResults = () => {
   const dispatch = useDispatch();
   const titlesFiltered = useSelector((state) => state.movies.filteredMovies);
-  const titleName = useSelector((state) => state.movies.titlename);
   const maxValue = useSelector((state) => state.movies.maxPages);
   const [currentPage, setCurrentPage] = useState(1);
+  const { nameTitle } = useParams();
+
   const paginado = (pageNumber) => {
     setCurrentPage(pageNumber);
   };
 
-  useEffect(() => {
-    dispatch(searchTitle(titleName, currentPage));
-  }, []);
+  // useEffect(() => {
+  //   dispatch(searchTitle(titleName));
+  // }, []);
 
   useEffect(() => {
-    dispatch(searchTitle(titleName, currentPage));
+    dispatch(searchTitle(nameTitle, currentPage));
   }, [currentPage]);
 
+  console.log(nameTitle);
   // console.log('el titulo es', titleName, titlesFiltered);
 
   return (
@@ -42,7 +45,7 @@ const SearchResults = () => {
               <section className="flex flex-col gap-6">
                 <h2 className="text-2xl font-bold">
                   Movies with {"'"}
-                  {titleName}
+                  {nameTitle}
                   {"'"}
                 </h2>
                 {titlesFiltered.map((movie, index) => (

@@ -6,7 +6,6 @@ const initialState = {
   discoverMovies: [],
   detailMovie: [],
   filteredMovies: [],
-  titlename: "",
   maxPages: null,
 };
 
@@ -34,16 +33,13 @@ export const movieSlice = createSlice({
     cleanSearch: (state) => {
       state.filteredMovies = []
     },
-    persistTitle: (state, action) => {
-      state.titlename = action.payload
-    },
     getMaxPages: (state, action) => {
       state.maxPages = action.payload
     }
   }
 });
 
-export const { setTrendingMovies, setDiscoverMovies, setDetailMovie, cleanDetail, getTitle, cleanSearch, persistTitle, getMaxPages } = movieSlice.actions
+export const { setTrendingMovies, setDiscoverMovies, setDetailMovie, cleanDetail, getTitle, cleanSearch, getMaxPages } = movieSlice.actions
 
 export default movieSlice.reducer;
 
@@ -116,9 +112,8 @@ export function searchTitle(title, currentPage) {
       } else {
         titles = await axios.get(`https://api.themoviedb.org/3/search/movie?api_key=${apikey}&query=${title}&page=${currentPage}`)
       }
-      console.log("desde redux", titles.data);
+      console.log("desde redux", title);
       dispatch(getTitle(titles.data.results))
-      dispatch(persistTitle(title))
       dispatch(getMaxPages(titles.data.total_pages))
     } catch (error) {
       console.log(error)

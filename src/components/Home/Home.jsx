@@ -5,6 +5,7 @@ import HeroSlider from '@components/HeroSlider';
 import Navbar from '@components/Navbar';
 import CardMovie from '@components/CardMovie';
 import Pagination from '@components/Pagination';
+import { Spinner } from '../Spinner/Spinner';
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -25,13 +26,13 @@ const Home = () => {
     dispatch(getMoviesHome(currentPage));
   }, [currentPage]);
 
-  // console.log('home ', trendingMovies, 'y ', maxValue);
+  console.log('home ', trendingMovies, 'y ', allMovies);
 
   return (
-    <main className="flex flex-col min-h-screen bg-slate-100 dark:bg-zinc-900 text-zinc-800 dark:text-slate-300 transition-colors duration-500">
+    <main className="flex flex-col items-center min-h-screen bg-slate-100 dark:bg-zinc-900 text-zinc-800 dark:text-slate-300 transition-colors duration-500">
       <Navbar />
       {trendingMovies.length === 0 && allMovies.length === 0 ? (
-        <p>cargando</p>
+        <Spinner />
       ) : (
         <>
           <section className="pt-12">
