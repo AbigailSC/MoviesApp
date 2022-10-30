@@ -19,17 +19,17 @@ export const Searchbar = () => {
   }
 
   return (
-    <div className="flex w-full text-center text-xl">
-      <div className="w-full relative">
+    <div className="flex w-full text-center text-xl ">
+      <div className="w-full relative mx-6">
         <input
           type="text"
           onChange={(e) => handleInputChange(e)}
-          placeholder="Search a movie or serie..."
-          className="dark:bg-zinc-800 transition-colors duration-500 bg-slate-200 py-2 px-4 w-9/12 rounded-xl focus:outline-none text-white"
+          placeholder="Search a movie..."
+          className="dark:bg-zinc-800 transition-colors duration-500 bg-slate-200 py-2 px-4 w-full rounded-xl focus:outline-none text-white"
         />
         <button
           onClick={(e) => handleSubmit(e)}
-          className="absolute text-slate-400 bottom-[20%] left-[80%] transition duration-300 ease-in-out hover:transition-all dark:hover:text-white hover:text-slate-600"
+          className="absolute text-slate-400 bottom-[20%] left-[90%] transition duration-300 ease-in-out hover:transition-all dark:hover:text-white hover:text-slate-600"
         >
           <Link to={`/search=${name}`}>
             <AiOutlineSearch className="h-6 w-6" />

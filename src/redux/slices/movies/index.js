@@ -7,6 +7,8 @@ const initialState = {
   detailMovie: [],
   filteredMovies: [],
   maxPages: null,
+  reviews: [],
+  genres: []
 };
 
 const apikey = import.meta.env.VITE_APP_API_KEY;
@@ -35,22 +37,32 @@ export const movieSlice = createSlice({
     },
     getMaxPages: (state, action) => {
       state.maxPages = action.payload
+    },
+    setReviews: (state, action) => {
+      state.reviews = action.payload
+    },
+    cleanReview: (state) => {
+      state.reviews = []
+    },
+    getGenres: (state, action) => {
+      state.genres = action.payload
     }
   }
 });
 
-export const { setTrendingMovies, setDiscoverMovies, setDetailMovie, cleanDetail, getTitle, cleanSearch, getMaxPages } = movieSlice.actions
+export const { setTrendingMovies, setDiscoverMovies, setDetailMovie, cleanDetail, getTitle, cleanSearch, getMaxPages, setReviews, cleanReview, getGenres } = movieSlice.actions
 
 export default movieSlice.reducer;
 
 export function getTrendingMovies() {
   return async function (dispatch) {
     try {
-      const trendingMoviesInfo = await axios.get('https://api.themoviedb.org/3/trending/movie/week?api_key=e2e3d6e5bcd2854b499d3e5b96ebbb1c')
+      const trendingMoviesInfo = await axios.get(`https://api.themoviedb.org/3/trending/movie/week?api_key=${apikey}`)
       const dataMovies = trendingMoviesInfo.data.results.map((movie) => {
         return {
           img: 'https://image.tmdb.org/t/p/w500/' + movie.backdrop_path,
-          name: movie.original_title || movie.name
+          name: movie.original_title || movie.name,
+          id: movie.id
         }
       })
       dispatch(setTrendingMovies(dataMovies))
@@ -70,7 +82,9 @@ export function getMoviesHome(currentPage) {
         moviesHome = await axios.get(`https://api.themoviedb.org/3/movie/popular?api_key=${apikey}&language=en-US&page=${currentPage}`)
       }
       dispatch(setDiscoverMovies(moviesHome.data.results))
-      dispatch(getMaxPages(moviesHome.data.total_pages))
+      dispatch(getMaxPages(500))
+      // ** La api solo permite un maximo de 500 paginas sin embargo esto no se ve en la data que trae, es por eso que uso un valor estatico
+      // console.log(moviesHome.data);
     } catch (error) {
       console.log(error)
     }
@@ -89,7 +103,7 @@ export function getMovieById(idTitle) {
         ...titleVideo.data,
         keywords: titleKeywords.data.keywords.map((key) => key.name)
       }
-      console.log(titleAllInfo);
+      // console.log(titleAllInfo);
       dispatch(setDetailMovie(titleAllInfo))
     } catch (error) {
       console.log(error)
@@ -112,7 +126,7 @@ export function searchTitle(title, currentPage) {
       } else {
         titles = await axios.get(`https://api.themoviedb.org/3/search/movie?api_key=${apikey}&query=${title}&page=${currentPage}`)
       }
-      console.log("desde redux", title);
+      // console.log("desde redux", title);
       dispatch(getTitle(titles.data.results))
       dispatch(getMaxPages(titles.data.total_pages))
     } catch (error) {
@@ -124,5 +138,34 @@ export function searchTitle(title, currentPage) {
 export function cleanSearchTitle() {
   return function (dispatch) {
     dispatch(cleanSearch())
+  }
+}
+
+export function getReviewsByTitle(idTitle) {
+  return async function (dispatch) {
+    try {
+      const reviewsByTitle = await axios.get(`https://api.themoviedb.org/3/movie/${idTitle}/reviews?api_key=${apikey}&language=en-US&page=1`)
+      // console.log(reviewsByTitle);
+      dispatch(setReviews(reviewsByTitle.data.results))
+    } catch (error) {
+      console.log(error);
+    }
+  }
+}
+
+export function cleanReviewTitle() {
+  return function (dispatch) {
+    dispatch(cleanReview())
+  }
+}
+
+export function getAllGenres() {
+  return async function (dispatch) {
+    try {
+      const genres = await axios.get(`https://api.themoviedb.org/3/genre/movie/list?api_key=${apikey}&language=en-US`)
+      dispatch(getGenres(genres.data.genres))
+    } catch (error) {
+      console.log(error);
+    }
   }
 }

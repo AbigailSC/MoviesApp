@@ -25,7 +25,7 @@ const SearchResults = () => {
     dispatch(searchTitle(nameTitle, currentPage));
   }, [currentPage]);
 
-  console.log(nameTitle);
+  // console.log(nameTitle);
   // console.log('el titulo es', titleName, titlesFiltered);
 
   return (
@@ -57,7 +57,7 @@ const SearchResults = () => {
                     img={
                       movie.poster_path
                         ? 'https://image.tmdb.org/t/p/w500/' + movie.poster_path
-                        : 'https://res.cloudinary.com/dbhb8sohh/image/upload/v1667060422/noImage_ywozbr.png'
+                        : 'https://via.placeholder.com/448x672'
                     }
                   />
                 ))}

@@ -26,7 +26,8 @@ const Home = () => {
     dispatch(getMoviesHome(currentPage));
   }, [currentPage]);
 
-  console.log('home ', trendingMovies, 'y ', allMovies);
+  // console.log('home ', trendingMovies, 'y ', allMovies);
+  // console.log(allGenres);
 
   return (
     <main className="flex flex-col items-center min-h-screen bg-slate-100 dark:bg-zinc-900 text-zinc-800 dark:text-slate-300 transition-colors duration-500">
@@ -52,7 +53,11 @@ const Home = () => {
                   id={movie.id}
                   title={movie.title || movie.name}
                   date={movie.release_date?.slice(0, 4)}
-                  img={'https://image.tmdb.org/t/p/w500/' + movie.poster_path}
+                  img={
+                    movie.poster_path
+                      ? 'https://image.tmdb.org/t/p/w500/' + movie.poster_path
+                      : 'https://via.placeholder.com/448x672'
+                  }
                 />
               ))}
             </section>

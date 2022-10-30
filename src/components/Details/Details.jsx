@@ -32,7 +32,8 @@ const Details = () => {
     video.name.toLowerCase().includes('official')
   );
 
-  // console.log(reviews);
+  console.log('rev', reviews);
+  console.log('mov', movieData);
 
   return (
     <main className="flex flex-col items-center bg-slate-100 min-h-screen dark:bg-zinc-800 text-slate-300 transition-colors duration-500">
