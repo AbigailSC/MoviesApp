@@ -163,7 +163,7 @@ const Details = () => {
                 More information
               </a>
             </button>
-            <div className="w-full h-1 border-t-2 border-slate-400 opacity-50 rounded-xl"></div>
+            <div className="w-full h-1 border-t border-slate-400 opacity-50 rounded-xl"></div>
             <div className="flex flex-col gap-2">
               <h3 className="text-lg font-bold">Recent reviews</h3>
               {reviews.length === 0 ? (
