@@ -163,18 +163,30 @@ const Details = () => {
                 More information
               </a>
             </button>
+            <div className="w-full h-1 border-t-2 border-slate-400 opacity-50 rounded-xl"></div>
             <div className="flex flex-col gap-2">
-              <h3 className="text-lg">Recent reviews</h3>
-              {reviews.map((review, index) => (
-                <Reviews
-                  key={index}
-                  name={review.author}
-                  avatarImg={review.author_details.avatar_path.slice(1)}
-                  rating={review.author_details.rating}
-                  review={review.content}
-                  date={review.updated_at}
-                />
-              ))}
+              <h3 className="text-lg font-bold">Recent reviews</h3>
+              {reviews.length === 0 ? (
+                <p className="text-slate-400">
+                  There are no reviews for this movie yet :(
+                </p>
+              ) : (
+                reviews.map((review, index) => (
+                  <Reviews
+                    key={index}
+                    name={review.author}
+                    avatarImg={
+                      review.author_details.avatar_path !== null
+                        ? review.author_details.avatar_path.slice(1)
+                        : 'https://via.placeholder.com/400'
+                    }
+                    rating={review.author_details.rating}
+                    review={review.content}
+                    date={review.updated_at}
+                    url={review.url}
+                  />
+                ))
+              )}
             </div>
           </div>
         </div>
