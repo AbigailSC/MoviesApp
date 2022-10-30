@@ -10,7 +10,7 @@ import {
 import Navbar from '@components/Navbar';
 import { FaStar } from 'react-icons/fa';
 import { Spinner } from '../Spinner/Spinner';
-import Reviews from '@components/Reviews';
+import { Reviews } from '../Reviews/Reviews.jsx';
 
 const Details = () => {
   const dispatch = useDispatch();
