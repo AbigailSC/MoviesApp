@@ -3,31 +3,36 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import {
   cleanDetailMovie,
-  getMovieById
+  getMovieById,
+  getReviewsByTitle,
+  cleanReviewTitle
 } from '../../redux/slices/movies/index';
 import Navbar from '@components/Navbar';
 import { FaStar } from 'react-icons/fa';
 import { Spinner } from '../Spinner/Spinner';
+import Reviews from '@components/Reviews';
 
 const Details = () => {
   const dispatch = useDispatch();
   const { idTitle } = useParams();
   const movieData = useSelector((state) => state.movies.detailMovie);
+  const reviews = useSelector((state) => state.movies.reviews);
 
   useEffect(() => {
     dispatch(getMovieById(idTitle));
+    dispatch(getReviewsByTitle(idTitle));
     return () => {
       dispatch(cleanDetailMovie());
+      dispatch(cleanReviewTitle());
     };
   }, []);
 
   const imgPosterTitle = `https://image.tmdb.org/t/p/w500/${movieData.poster_path}`;
-
   const titleVideo = movieData.results?.find((video) =>
     video.name.toLowerCase().includes('official')
   );
 
-  console.log(titleVideo);
+  // console.log(reviews);
 
   return (
     <main className="flex flex-col items-center bg-slate-100 min-h-screen dark:bg-zinc-800 text-slate-300 transition-colors duration-500">
@@ -35,21 +40,29 @@ const Details = () => {
       {movieData.length === 0 ? (
         <Spinner />
       ) : (
-        <div className="relative w-full min-h-screen bg-zinc-900 transition-colors duration-500">
+        <div className="relative w-full min-h-screen">
           {/* <div
             className="absolute mt-12  inset-0 bg-no-repeat bg-zinc-900 min-h-screen z-0 filter brightness-[.3] blur-sm "
             style={{ backgroundImage: `url(${imgPosterTitle})` }}
           >
           </div> */}
           <div
-            className="absolute bg-center min-h-screen bg-fixed bg-cover bg-no-repeat z-40 px-5 py-8 flex flex-col gap-5"
-            style={{
-              backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.9)),url(${imgPosterTitle})`
-            }}
+            className="absolute bg-center min-h-screen bg-zinc-900 bg-fixed bg-cover bg-no-repeat z-40 px-5 py-8 flex flex-col gap-5"
+            style={
+              movieData.poster_path === null
+                ? { width: '100%' }
+                : {
+                    backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 1)),url(${imgPosterTitle})`
+                  }
+            }
           >
             <div className="flex gap-4 mt-12 items-center">
               <img
-                src={imgPosterTitle}
+                src={
+                  movieData.poster_path === null
+                    ? 'https://via.placeholder.com/448x672'
+                    : `https://image.tmdb.org/t/p/w500/${movieData.poster_path}`
+                }
                 alt={movieData.title}
                 className="w-1/3 rounded-lg"
               />
@@ -85,7 +98,7 @@ const Details = () => {
               {movieData.genres.map((genre, index) => (
                 <button
                   key={index}
-                  className="text-slate-400 hover:text-white transition bg-zinc-900 duration-300 ease-in-out cursor-pointer py-1 w-32 rounded-md"
+                  className="text-slate-400 hover:text-white transition bg-zinc-800 duration-300 ease-in-out cursor-pointer py-1 w-32 rounded-md"
                 >
                   {genre.name}
                 </button>
@@ -102,37 +115,47 @@ const Details = () => {
             ) : null}
             <div className="text-lg flex gap-1">
               <p>Lenguage:</p>
-              <p className="text-slate-400">
-                {movieData.spoken_languages
-                  .map((leng) => leng.english_name)
-                  .join(', ')}
-              </p>
+              {movieData.spoken_languages.length === 0 ? (
+                <p className="text-slate-400">No info</p>
+              ) : (
+                <p className="text-slate-400">
+                  {movieData.spoken_languages
+                    .map((leng) => leng.english_name)
+                    .join(', ')}
+                </p>
+              )}
             </div>
             <div className="text-lg">
               <p className="text-slate-400">
                 <span className="text-slate-300">Production companies: </span>
-                {movieData.production_companies
-                  .map((company) => company.name)
-                  .join(', ')}
+                {movieData.production_companies.length === 0
+                  ? 'No info'
+                  : movieData.production_companies
+                      .map((company) => company.name)
+                      .join(', ')}
               </p>
             </div>
             <div className="text-lg">
-              <p className="text-slate-400">
-                <span className="text-slate-300">Keywords: </span>
-                {movieData.keywords.map((words) => words).join(', ')}
-              </p>
+              {movieData.keywords.length === 0 ? null : (
+                <p className="text-slate-400">
+                  <span className="text-slate-300">Keywords: </span>
+                  {movieData.keywords.map((words) => words).join(', ')}
+                </p>
+              )}
             </div>
-            <iframe
-              className="aspect-video"
-              title="Youtube video player"
-              allowFullScreen
-              src={
-                titleVideo
-                  ? `https://www.youtube.com/embed/${titleVideo.key}`
-                  : `https://www.youtube.com/embed/${movieData.results[0].key}`
-              }
-            ></iframe>
-            <button className="text-lg text-slate-400 hover:text-white transition bg-zinc-900 duration-300 ease-in-out cursor-pointer py-1 rounded-md">
+            {titleVideo === undefined ? null : (
+              <iframe
+                className="aspect-video"
+                title="Youtube video player"
+                allowFullScreen
+                src={
+                  titleVideo
+                    ? `https://www.youtube.com/embed/${titleVideo.key}`
+                    : `https://www.youtube.com/embed/${movieData.results[0].key}`
+                }
+              ></iframe>
+            )}
+            <button className="text-lg text-slate-400 hover:text-white transition bg-zinc-800 duration-300 ease-in-out cursor-pointer py-1 rounded-md">
               <a
                 target="_black"
                 href={`https://www.imdb.com/title/${movieData.imdb_id}/?ref_=nv_sr_srsg_0`}
@@ -140,6 +163,19 @@ const Details = () => {
                 More information
               </a>
             </button>
+            <div className="flex flex-col gap-2">
+              <h3 className="text-lg">Recent reviews</h3>
+              {reviews.map((review, index) => (
+                <Reviews
+                  key={index}
+                  name={review.author}
+                  avatarImg={review.author_details.avatar_path.slice(1)}
+                  rating={review.author_details.rating}
+                  review={review.content}
+                  date={review.updated_at}
+                />
+              ))}
+            </div>
           </div>
         </div>
       )}
