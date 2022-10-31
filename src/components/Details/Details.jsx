@@ -28,12 +28,14 @@ const Details = () => {
   }, []);
 
   const imgPosterTitle = `https://image.tmdb.org/t/p/w500/${movieData.poster_path}`;
-  const titleVideo = movieData.results?.find((video) =>
-    video.name.toLowerCase().includes('official')
+  const titleVideo = movieData.results?.find(
+    (video) =>
+      video.name.toLowerCase().includes('official') ||
+      video.name.toLowerCase().includes('original')
   );
 
-  console.log('rev', reviews);
-  console.log('mov', movieData);
+  // console.log('rev', titleVideo);
+  console.log('movies => ', movieData);
 
   return (
     <main className="flex flex-col items-center bg-slate-100 min-h-screen dark:bg-zinc-800 text-slate-300 transition-colors duration-500">
