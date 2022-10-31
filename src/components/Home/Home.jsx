@@ -6,6 +6,7 @@ import Navbar from '@components/Navbar';
 import CardMovie from '@components/CardMovie';
 import Pagination from '@components/Pagination';
 import { Spinner } from '../Spinner/Spinner';
+import { TopButton } from '../TopButton/TopButton';
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -27,7 +28,6 @@ const Home = () => {
   }, [currentPage]);
 
   // console.log('home ', trendingMovies, 'y ', allMovies);
-  // console.log(allGenres);
 
   return (
     <main className="flex flex-col items-center min-h-screen bg-slate-100 dark:bg-zinc-900 text-zinc-800 dark:text-slate-300 transition-colors duration-500">
@@ -35,8 +35,8 @@ const Home = () => {
       {trendingMovies.length === 0 && allMovies.length === 0 ? (
         <Spinner />
       ) : (
-        <>
-          <section className="pt-12">
+        <div className="pt-12">
+          <section className="lg:hidden">
             <HeroSlider />
           </section>
           <Pagination
@@ -44,9 +44,11 @@ const Home = () => {
             current={currentPage}
             maxValue={maxValue}
           />
-          <div className="w-full p-6 ">
-            <section className="flex flex-col gap-6">
-              <h2 className="text-2xl font-bold">Trending movies</h2>
+          <div className="flex flex-col w-full p-6 gap-6 md:px-4">
+            <h2 className="text-2xl font-bold sm:text-center">
+              Trending movies
+            </h2>
+            <section className="flex flex-col gap-6 sm:justify-center sm:items-center md:flex-row md:flex-wrap">
               {allMovies.map((movie, index) => (
                 <CardMovie
                   key={index}
@@ -62,8 +64,9 @@ const Home = () => {
               ))}
             </section>
           </div>
-        </>
+        </div>
       )}
+      <TopButton />
     </main>
   );
 };

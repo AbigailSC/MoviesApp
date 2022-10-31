@@ -14,10 +14,10 @@ const HeroSlider = () => {
   const slideRef = useRef();
 
   useEffect(() => {
+    startSlider();
     slideRef.current.addEventListener('animationend', removeAnimation);
     slideRef.current.addEventListener('mouseenter', pauseSlider);
     slideRef.current.addEventListener('mouseleave', startSlider);
-    startSlider();
     return () => {
       pauseSlider();
     };
@@ -58,7 +58,7 @@ const HeroSlider = () => {
       ) : (
         <div
           ref={slideRef}
-          className="w-full select-none relative bg-zinc-900 "
+          className="w-screen select-none relative bg-zinc-900 "
         >
           <div className="aspect-w-16 aspect-h-9duration-700 ease-linear">
             <img
@@ -67,7 +67,7 @@ const HeroSlider = () => {
               className="w-full h-full"
             />
           </div>
-          <div className="absolute bg-[rgba(64,64,64,0.5)] left-0 top-3/4 w-full h-[25%] pt-3">
+          <div className="absolute bg-[rgba(64,64,64,0.4)] left-0 top-3/4 w-full h-[25%] pt-3">
             <p className="font-bold text-white px-4 text-2xl cursor-pointer overflow-hidden whitespace-nowrap text-ellipsis">
               <Link to={`/${trendingMovies[currentImage].id}`}>
                 {trendingMovies[currentImage].name}

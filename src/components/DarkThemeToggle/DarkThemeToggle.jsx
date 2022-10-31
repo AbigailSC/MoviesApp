@@ -11,7 +11,7 @@ const DarkThemeToggle = () => {
     <button
       onClick={() => dispatch(toggleDarkMode())}
       type="button"
-      className="group relative rounded-lg p-2.5 text-sm text-gray-500 transition-colors focus:outline-none dark:text-gray-400 "
+      className="group relative rounded-lg p-2.5 text-sm text-gray-500 transition-colors focus:outline-none dark:text-gray-400 lg:border-2 lg:border-zinc-300 lg:dark:border-zinc-700"
     >
       {!isDarkMode ? <IoMdMoon /> : <IoMdSunny />}
     </button>

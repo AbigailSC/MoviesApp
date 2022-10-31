@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { searchTitle } from '../../redux/slices/movies';
 import { useParams } from 'react-router-dom';
+import { TopButton } from '../TopButton/TopButton';
 
 const SearchResults = () => {
   const dispatch = useDispatch();
@@ -41,13 +42,13 @@ const SearchResults = () => {
               current={currentPage}
               maxValue={maxValue}
             />
-            <div className="w-full p-6 ">
-              <section className="flex flex-col gap-6">
-                <h2 className="text-2xl font-bold">
-                  Movies with {"'"}
-                  {nameTitle}
-                  {"'"}
-                </h2>
+            <div className="flex flex-col w-full p-6 gap-6">
+              <h2 className="text-2xl font-bold sm:text-center">
+                Movies with {"'"}
+                {nameTitle}
+                {"'"}
+              </h2>
+              <section className="flex flex-col gap-6 sm:justify-center sm:text-center sm:items-center md:flex-row md:flex-wrap">
                 {titlesFiltered.map((movie, index) => (
                   <CardMovie
                     key={index}
@@ -65,6 +66,7 @@ const SearchResults = () => {
             </div>
           </div>
         )}
+        <TopButton />
       </main>
     </div>
   );

@@ -29,14 +29,14 @@ const Pagination = ({ pageFunction, current, maxValue }) => {
       <button
         onClick={(e) => handleFirstPage(e)}
         disabled={current <= 1}
-        className="flex font-bold p-2 bg-slate-300 rounded-l-xl dark:bg-zinc-700 text-slate-800 dark:text-slate-300 transition-colors duration-500 dark:hover:bg-zinc-800 hover:bg-slate-400"
+        className="cursor-pointer flex font-bold p-2 bg-slate-300 rounded-l-xl dark:bg-zinc-700 text-slate-800 dark:text-slate-300 transition-colors duration-500 dark:hover:bg-zinc-800 hover:bg-slate-400"
       >
         First
       </button>
       <button
         onClick={(e) => handlePrevPage(e)}
         disabled={current <= 1}
-        className="flex font-bold border-l p-2 dark:border-slate-500 border-slate-400 bg-slate-300 dark:bg-zinc-700 text-slate-800 dark:text-slate-300 transition-colors duration-500 dark:hover:bg-zinc-800 hover:bg-slate-400"
+        className="cursor-pointer flex font-bold border-l p-2 dark:border-slate-500 border-slate-400 bg-slate-300 dark:bg-zinc-700 text-slate-800 dark:text-slate-300 transition-colors duration-500 dark:hover:bg-zinc-800 hover:bg-slate-400"
       >
         <BiSkipPrevious className="h-6 w-6 text-zinc-900 dark:text-slate-300 transition-colors duration-500" />
         Prev
