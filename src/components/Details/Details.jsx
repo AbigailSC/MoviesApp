@@ -50,7 +50,7 @@ const Details = () => {
           >
           </div> */}
           <div
-            className="absolute bg-center min-h-screen bg-zinc-900 bg-fixed bg-cover bg-no-repeat z-40 px-5 py-8 flex flex-col gap-5"
+            className="absolute bg-center min-h-screen bg-zinc-900 bg-fixed bg-cover bg-no-repeat z-40 px-5 py-8 flex flex-col gap-5 md:bg-top md:p-0"
             style={
               movieData.poster_path === null
                 ? { width: '100%' }
@@ -59,7 +59,7 @@ const Details = () => {
                   }
             }
           >
-            <div className="flex gap-4 mt-12 items-center">
+            <div className="flex gap-4 md:gap-10 mt-12 items-center w-full md:bg-slate-100 md:dark:bg-zinc-900 transition-colors duration-500 md:text-zinc-800 dark:text-slate-300 md:px-10 md:py-8">
               <img
                 src={
                   movieData.poster_path === null
@@ -67,31 +67,35 @@ const Details = () => {
                     : `https://image.tmdb.org/t/p/w500/${movieData.poster_path}`
                 }
                 alt={movieData.title}
-                className="w-1/3 rounded-lg"
+                className="w-1/3 rounded-lg md:w-1/4"
               />
               <div className="flex flex-col gap-4">
-                <p className="text-3xl font-bold">{movieData.title}</p>
-                <p className="text-xl">{movieData.tagline}</p>
+                <p className="text-3xl font-bold md:text-4xl">
+                  {movieData.title}
+                </p>
+                <p className="text-xl md:text-2xl">{movieData.tagline}</p>
                 <div className="flex items-center">
-                  <p className="text-xl">
+                  <p className="text-xl md:text-2xl">
                     {movieData.release_date.slice(0, 4)}
                   </p>
                   <span className="w-1 h-1 mx-1.5 bg-gray-500 rounded-full"></span>
                   {movieData.runtime > 120 ? (
-                    <p className="text-xl text-slate-400">
+                    <p className="text-xl text-slate-400 md:text-2xl">
                       2h {movieData.runtime - 120}min
                     </p>
                   ) : (
-                    <p className="text-xl text-slate-400">
+                    <p className="text-xl text-slate-400 md:text-2xl">
                       1h {movieData.runtime - 60}min
                     </p>
                   )}
                 </div>
                 <div className="flex items-center gap-1">
                   <FaStar className="text-yellow-400" />
-                  <p className="font-bold">{movieData.vote_average}</p>
+                  <p className="font-bold text-xl md:text-2xl">
+                    {movieData.vote_average}
+                  </p>
                   <span className="w-1 h-1 bg-gray-500 rounded-full"></span>
-                  <p className="cursor-pointer font-medium underline hover:no-underline">
+                  <p className="cursor-pointer font-medium underline hover:no-underline text-xl md:text-2xl">
                     {movieData.vote_count} reviews
                   </p>
                 </div>
