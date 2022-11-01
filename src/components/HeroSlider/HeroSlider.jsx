@@ -13,6 +13,10 @@ const HeroSlider = () => {
   const trendingMovies = useSelector((state) => state.movies.trendingMovies);
   const slideRef = useRef();
 
+  const removeAnimation = () => {
+    slideRef.current.classList.remove('fade-anim');
+  };
+
   useEffect(() => {
     slideRef.current.addEventListener('animationend', removeAnimation);
     slideRef.current.addEventListener('mouseenter', pauseSlider);
@@ -33,15 +37,12 @@ const HeroSlider = () => {
     clearInterval(slideInterval);
   };
 
-  const removeAnimation = () => {
-    slideRef.current.classList.remove('fade-anim');
-  };
-
   const handleOnNextClick = () => {
     count = (count + 1) % trendingMovies.length;
     setCurrentImage(count);
     slideRef.current.classList.add('fade-anim');
   };
+
   const handleOnPrevClick = () => {
     const imageLength = trendingMovies.length;
     count = (currentImage + imageLength - 1) % imageLength;
