@@ -14,10 +14,10 @@ const HeroSlider = () => {
   const slideRef = useRef();
 
   useEffect(() => {
-    startSlider();
     slideRef.current.addEventListener('animationend', removeAnimation);
     slideRef.current.addEventListener('mouseenter', pauseSlider);
     slideRef.current.addEventListener('mouseleave', startSlider);
+    startSlider();
     return () => {
       pauseSlider();
     };

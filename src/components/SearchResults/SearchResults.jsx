@@ -26,7 +26,7 @@ const SearchResults = () => {
     dispatch(searchTitle(nameTitle, currentPage));
   }, [currentPage]);
 
-  // console.log(nameTitle);
+  // console.log('los titulos son ', titlesFiltered);
   // console.log('el titulo es', titleName, titlesFiltered);
 
   return (
@@ -34,7 +34,12 @@ const SearchResults = () => {
       <main className="flex flex-col min-h-screen bg-slate-100 dark:bg-zinc-900 text-zinc-800 dark:text-slate-300 transition-colors duration-500">
         <Navbar />
         {titlesFiltered.length === 0 ? (
-          <p>Loading</p>
+          <div className="text-center flex flex-col justify-center min-h-screen">
+            <p className="text-lg px-10">
+              We couldn{"'"}t find any movies with that name, please try again.
+              😓
+            </p>
+          </div>
         ) : (
           <div className="pt-12">
             <Pagination

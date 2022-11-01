@@ -126,11 +126,16 @@ export function searchTitle(title, currentPage) {
       } else {
         titles = await axios.get(`https://api.themoviedb.org/3/search/movie?api_key=${apikey}&query=${title}&page=${currentPage}`)
       }
+      if (title === "") {
+        dispatch(getTitle([]))
+        dispatch(getMaxPages(1))
+      } else {
+        dispatch(getTitle(titles.data.results))
+        dispatch(getMaxPages(titles.data.total_pages))
+      }
       // console.log("desde redux", title);
-      dispatch(getTitle(titles.data.results))
-      dispatch(getMaxPages(titles.data.total_pages))
     } catch (error) {
-      console.log(error)
+      console.log(error.message)
     }
   }
 }

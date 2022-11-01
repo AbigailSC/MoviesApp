@@ -9,14 +9,21 @@ export const Searchbar = () => {
   const [name, setName] = useState('');
 
   function handleInputChange(e) {
-    e.preventDefault();
     setName(e.target.value);
   }
   function handleSubmit(e) {
     e.preventDefault();
-    dispatch(searchTitle(name));
-    setName('');
+    if (name !== '') {
+      dispatch(searchTitle(name));
+      setName('');
+    }
   }
+
+  // const handleKeypress = (e) => {
+  //   if (e.code === 'Enter') {
+  //     handleSubmit();
+  //   }
+  // };
 
   return (
     <div className="flex w-full text-center text-xl md:w-2/4 mb-6 md:mb-0 xl:w-1/3">
@@ -31,7 +38,7 @@ export const Searchbar = () => {
           onClick={(e) => handleSubmit(e)}
           className="absolute text-slate-400 bottom-[20%] left-[90%] sm:left-[95%] md:left-[90%] lg:left-[93%] xl:left-[92%] 2xl:left-[94%] transition duration-300 ease-in-out hover:transition-all dark:hover:text-white hover:text-slate-600"
         >
-          <Link to={`/search=${name}`}>
+          <Link to={name === '' ? null : `/search=${name}`}>
             <AiOutlineSearch className="h-6 w-6" />
           </Link>
         </button>
