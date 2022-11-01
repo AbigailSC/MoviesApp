@@ -78,11 +78,11 @@ const Details = () => {
                   </p>
                   <span className="w-1 h-1 mx-1.5 bg-gray-500 rounded-full"></span>
                   {movieData.runtime > 120 ? (
-                    <p className="text-xl text-slate-400">
+                    <p className="text-xl text-slate-400 md:dark:text-slate-400 md:text-slate-500 transition-colors duration-500">
                       2h {movieData.runtime - 120}min
                     </p>
                   ) : movieData.runtime > 60 ? (
-                    <p className="text-xl text-slate-400">
+                    <p className="text-xl text-slate-400 md:dark:text-slate-400 md:text-slate-500 transition-colors duration-500">
                       1h {movieData.runtime - 60}min
                     </p>
                   ) : (
@@ -125,9 +125,11 @@ const Details = () => {
               <div className="text-lg flex gap-1">
                 <p>Lenguage:</p>
                 {movieData.spoken_languages.length === 0 ? (
-                  <p className="text-slate-400">No info</p>
+                  <p className="text-slate-400 md:dark:text-slate-400 md:text-slate-500 transition-colors duration-500">
+                    No info
+                  </p>
                 ) : (
-                  <p className="text-slate-400">
+                  <p className="text-slate-400 md:dark:text-slate-400 md:text-slate-500 transition-colors duration-500">
                     {movieData.spoken_languages
                       .map((leng) => leng.english_name)
                       .join(', ')}
@@ -135,7 +137,7 @@ const Details = () => {
                 )}
               </div>
               <div className="text-lg">
-                <p className="text-slate-400">
+                <p className="text-slate-400 md:dark:text-slate-400 md:text-slate-500 transition-colors duration-500">
                   <span className="transition-colors duration-500 md:text-zinc-800 dark:text-slate-300">
                     Production companies:{' '}
                   </span>
@@ -148,7 +150,7 @@ const Details = () => {
               </div>
               <div className="text-lg">
                 {movieData.keywords.length === 0 ? null : (
-                  <p className="text-slate-400">
+                  <p className="text-slate-400 md:dark:text-slate-400 md:text-slate-500 transition-colors duration-500">
                     <span className="transition-colors duration-500 md:text-zinc-800 dark:text-slate-300">
                       Keywords:{' '}
                     </span>
