@@ -36,9 +36,9 @@ const Home = () => {
         <Spinner />
       ) : (
         <div className="pt-12">
-          <section className="lg:hidden">
+          {/* <section className="lg:hidden">
             <HeroSlider />
-          </section>
+          </section> */}
           <Pagination
             pageFunction={paginado}
             current={currentPage}
