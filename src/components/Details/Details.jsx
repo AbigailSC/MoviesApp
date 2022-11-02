@@ -172,7 +172,8 @@ const Details = () => {
               )}
               <button className="w-full text-lg text-slate-400 hover:text-white transition bg-zinc-800 duration-300 ease-in-out cursor-pointer py-1 rounded-md xl:w-3/4 2xl:w-2/4">
                 <a
-                  target="_black"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   href={`https://www.imdb.com/title/${movieData.imdb_id}/?ref_=nv_sr_srsg_0`}
                 >
                   More information
